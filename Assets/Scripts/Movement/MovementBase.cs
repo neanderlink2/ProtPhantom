@@ -47,6 +47,22 @@ public class MovementBase : MonoBehaviour, IMovimentavel
         Rotacionar(direcao);
     }
 
+    public void MoverPlayer(Vector3 direcao)
+    {
+        var newVelocity = Camera.main.transform.TransformDirection(direcao).normalized * m_vel;
+
+        if (direcao.z != 0 && newVelocity.z < (m_vel*0.9f))
+        {
+            newVelocity = transform.forward * m_vel;
+        }
+
+        newVelocity.y = m_rigid.velocity.y;
+
+        m_rigid.velocity = newVelocity;
+
+        Rotacionar(direcao);
+    }
+
     public void Pular()
     {
         m_rigid.AddForce(transform.up * m_forcaPulo, ForceMode.Impulse);

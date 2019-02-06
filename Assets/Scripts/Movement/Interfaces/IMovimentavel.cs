@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IMovimentavel
+﻿using UnityEngine;
+namespace Assets.Scripts.Movement.Interfaces
 {
-    float Velocidade { get; set; }
-    float ForcaPulo { get; set; }
-    void Mover(Vector3 direcao);
-    void Pular();
+    public interface IMovimentavel
+    {
+        float Velocidade { get; set; }
+        float ForcaPulo { get; set; }
+        void Mover(Vector3 direcao);
+        void Pular();
+    }
+
 }

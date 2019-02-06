@@ -12,7 +12,7 @@ namespace Assets.Scripts.Util
         {
             string str = "";
             await Task.Run(() => str = JsonUtility.ToJson(objeto));
-
+            Debug.Log(str);
             var caminho = Path.Combine(PATH_SAVE_DATA_FOLDER, nomeDoArquivo);
 
             using (var writer = new StreamWriter(caminho, false))

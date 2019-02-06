@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Util;
 using System;
 using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine;
 
 namespace Assets.Scripts.Itens.Entities
 {
@@ -12,8 +13,9 @@ namespace Assets.Scripts.Itens.Entities
 
         public string nomeItem;
         public string descricao;
-        public string caminhoImagem;
-        
+
+        public Sprite sprite;
+
         public async void Salvar ()
         {
             await FileManager.SalvarJson(this, "item.asset");

@@ -1,6 +1,9 @@
 ﻿using Assets.Scripts.Itens.Behaviours;
 using Assets.Scripts.Movement;
+using Assets.Scripts.Util;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Player
 {
@@ -22,6 +25,52 @@ namespace Assets.Scripts.Player
         }
 
         public void Update()
+        {
+            if (!Inventario.isMostrandoInventario)
+            {
+                CameraManager.CameraPrincipal.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+                ControlarMovimentacao();
+            }else
+            {
+                CameraManager.CameraPrincipal.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (Inventario.isMostrandoInventario)
+                {
+                    StartCoroutine(DescarregarCena("Inventario"));
+                }
+                else
+                {
+                    StartCoroutine(CarregarCena("Inventario"));
+                }
+            }
+        }
+
+        public IEnumerator CarregarCena(string cena)
+        {
+            var loadScene = SceneManager.LoadSceneAsync(cena, LoadSceneMode.Additive);
+            loadScene.completed += (a) =>
+            {
+                Inventario.PopularInventario();
+                Inventario.isMostrandoInventario = true;
+            };
+            yield return loadScene;
+        }
+
+        public IEnumerator DescarregarCena(string cena)
+        {
+            var loadScene = SceneManager.UnloadSceneAsync(cena);
+            loadScene.completed += (a) =>
+            {
+                Inventario.isMostrandoInventario = false;
+            };
+
+            yield return loadScene;
+        }
+
+        public void ControlarMovimentacao()
         {
             var direcao = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             m_move.MoverPlayer(direcao);

@@ -16,4 +16,4 @@ MonoBehaviour:
     id: 1
     nomeItem: Bola amarela
     descricao: Uma bola amarela
-    caminhoImagem: 
+    sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
